@@ -1,6 +1,6 @@
 # `Neurolyx App`
 
-Example application demonstrates key features of the `Neurolyx_APP` plugin:
+Application demonstrates key features of the `Neurolyx_APP` plugin:
 
 + Adapter status monitoring,
 
@@ -22,7 +22,7 @@ The plugin (for now) uses Serial Port profile for moving data over RFCOMM, so ma
 
 Main screen and options |  Discovery and connecting  |  Simple chat with server  |  Background connection  |
 :---:|:---:|:---:|:---:|
-![](https://drive.google.com/file/d/1W2ej47BEJ3aMLLFaRWZHtt6GKTT2G9gp/view?usp=sharing)  |  ![](https://drive.google.com/file/d/1W1-u1idAbEOFqAsAK5_NirHyG3nbIu_T/view?usp=sharing)  |  ![](https://drive.google.com/file/d/1VisClxy6k8p5n07SGgl02kvEKsXdCN_R/view?usp=sharing)  |  ![](https://i.imgur.com/3wvwDVo.png)
+![](https://imgur.com/ivS4AgW.png)  |  ![](https://imgur.com/OBJ0vae.png)  |  ![](https://imgur.com/nPGCCEt.png)  |  ![](https://i.imgur.com/3wvwDVo.png)
 
 
 Note: There screen-shots might be out-dated. Build and see the example app for yourself, you won't regret it. :)
@@ -31,7 +31,7 @@ Note: There screen-shots might be out-dated. Build and see the example app for y
 
 There is a recording of the tests (click for open video as WEBM version):
 
-[![Test with multiple connections](https://i.imgur.com/rDFrYcS.png)](https://webm.red/qpGg.webm)
+[![Test with multiple connections](https://i.imgur.com/rDFrYcS.png)](https://imgur.com/OBJ0vae.png)
 
 
 
