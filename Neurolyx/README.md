@@ -1,6 +1,6 @@
-# `Neurolyx App`
+# `flutter_bluetooth_serial_example`
 
-Application demonstrates key features of the `Neurolyx_APP` plugin:
+Example application demonstrates key features of the `flutter_bluetooth_serial` plugin:
 
 + Adapter status monitoring,
 
@@ -22,8 +22,7 @@ The plugin (for now) uses Serial Port profile for moving data over RFCOMM, so ma
 
 Main screen and options |  Discovery and connecting  |  Simple chat with server  |  Background connection  |
 :---:|:---:|:---:|:---:|
-![](https://imgur.com/ivS4AgW.png)  |  ![](https://imgur.com/OBJ0vae.png)  |  ![](https://imgur.com/nPGCCEt.png)  |  ![](https://i.imgur.com/3wvwDVo.png)
-
+![](https://i.imgur.com/qeeMsVe.png)  |  ![](https://i.imgur.com/zruuelZ.png)  |  ![](https://i.imgur.com/y5mTUey.png)  |  ![](https://i.imgur.com/3wvwDVo.png)
 
 Note: There screen-shots might be out-dated. Build and see the example app for yourself, you won't regret it. :)
 
@@ -31,7 +30,7 @@ Note: There screen-shots might be out-dated. Build and see the example app for y
 
 There is a recording of the tests (click for open video as WEBM version):
 
-[![Test with multiple connections](https://i.imgur.com/rDFrYcS.png)](https://imgur.com/OBJ0vae.png)
+[![Test with multiple connections](https://i.imgur.com/rDFrYcS.png)](https://webm.red/qpGg.webm)
 
 
 

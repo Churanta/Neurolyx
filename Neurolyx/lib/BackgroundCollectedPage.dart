@@ -61,6 +61,7 @@ class BackgroundCollectedPage extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.purple[500],
           title: Text('Collected data'),
           actions: <Widget>[
             // Progress circle
@@ -108,10 +109,10 @@ class BackgroundCollectedPage extends StatelessWidget {
                     style: PaintingStyle.stroke,
                     strokeWidth: 1.7,
                     color: Colors.indigoAccent),
-                const PaintStyle(
-                    style: PaintingStyle.stroke,
-                    strokeWidth: 1.7,
-                    color: Colors.redAccent),
+                // const PaintStyle(
+                //     style: PaintingStyle.stroke,
+                //     strokeWidth: 1.7,
+                //     color: Colors.redAccent),
               ],
             ),
             // Divider(),

@@ -21,7 +21,6 @@ class ExampleApplication extends StatelessWidget {
   }
 }
 
-
 // adding new file
 class MyApp extends StatelessWidget {
   @override
@@ -179,7 +178,7 @@ class HomeScreen extends StatelessWidget {
                   shadows: [
                     Shadow(
                       offset: Offset(2.0, 2.0), //position of shadow
-                      blurRadius: 7.0, //blur intensity of shadow
+                      blurRadius: 5.0, //blur intensity of shadow
                       color: Colors.black
                           .withOpacity(0.8), //color of shadow with opacity
                     ),
@@ -217,4 +216,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-

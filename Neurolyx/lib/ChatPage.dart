@@ -5,20 +5,21 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bluetooth_serial_example/BackgroundCollectedPage.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:horizontal_picker/horizontal_picker.dart';
 import 'package:flutter_spinbox/material.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
-double _value = 0.0;
-String? _time;
-String? time;
+double _value = 40;
+int? _time;
+int? time;
 // ignore: non_constant_identifier_names
 String? rec_d;
 String? check;
 String? data;
 // ignore: unused_element
 Timer? _timer;
-String? datas;
-String? mode;
+double? datas;
+String? mode = '1';
 const JsonEncoder encoder = JsonEncoder.withIndent('  ');
 
 class ChatPage extends StatefulWidget {
@@ -151,7 +152,7 @@ class _ChatPage extends State<ChatPage> {
     final serverName = widget.server.name ?? "Unknown";
     return Scaffold(
         appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 255, 140, 0),
+            backgroundColor: Colors.purple[500],
             title: (isConnecting
                 ? Text('Connecting chat to ' + serverName + '...')
                 : isConnected
@@ -164,223 +165,310 @@ class _ChatPage extends State<ChatPage> {
               Container(
                 width: 370,
                 height: 600,
-                child: Card(
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: Theme.of(context).colorScheme.outline,
-                    ),
-                    borderRadius: const BorderRadius.all(Radius.circular(12)),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      //// Here starts the code inside the card
-                      ///
-                      ///
-                      Container(
-                        margin: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text('Enter the number of cycles'),
-                            Container(
-                                margin: const EdgeInsets.only(top: 30),
-                                padding: const EdgeInsets.all(5),
-                                width: double.infinity,
-                                child: SfSlider(
-                                  min: 0.0,
-                                  max: 100.0,
-                                  value: _value,
-                                  interval: 20,
-                                  stepSize: 20.0,
-                                  showTicks: true,
-                                  showLabels: true,
-                                  minorTicksPerInterval: 0,
-                                  onChanged: (dynamic value) {
-                                    if (isConnected) {
-                                      setState(() {
-                                        _value = value;
-                                      });
-                                      if (_value == 0) {
-                                        final speed1 = {'speed': _value};
-                                        // _sendMessage(encoder.convert(speed1));
-                                      } else if (_value == 20) {
-                                        final speed1 = {'speed': _value};
-                                        // _sendMessage(encoder.convert(speed1));
-                                      } else if (_value == 40) {
-                                        final speed1 = {'speed': _value};
-                                        // _sendMessage(encoder.convert(speed1));
-                                      } else if (_value == 60) {
-                                        final speed1 = {'speed': _value};
-                                        // _sendMessage(encoder.convert(speed1));
-                                      } else if (_value == 80) {
-                                        final speed1 = {'speed': _value};
-                                        // _sendMessage(encoder.convert(speed1));
-                                      } else if (_value == 100) {
-                                        final speed1 = {'speed': _value};
-                                        // _sendMessage(encoder.convert(speed1));
-                                      }
-                                    }
-                                  },
-                                )),
-                            Divider(),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 30,
-                                )
-                              ],
-                            ),
-
-                            Container(
-                                margin: const EdgeInsets.all(8),
-                                child: Column(
-                                  children: [
-                                    Text('Enter Time in Min'),
-                                    SpinBox(
-                                      min: 1,
-                                      max: 200,
-                                      value: 30,
-                                      // onChanged: (value) => print(value),
-                                      onChanged: (dynamic value) {
-                                        if (isConnected) {
-                                          // setState(() {
-                                          //   _time = time;
-                                          //   final time2={'time':_time};
-                                          //   _sendMessage(encoder.convert(time2));
-                                          // });
-                                          _time = value;
-                                          final datas = {
-                                            'time': _time.toString()
-                                          };
-                                          // _sendMessage('time:'+_time.toString());
-                                          // _sendMessage(encoder.convert(datas));
-                                        }
-                                      },
-                                    ),
-                                    Divider(),
-                                    Padding(
-                                        padding: const EdgeInsets.all(16.0)),
-                                    Text('Choose Exercise Mode'),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: RadioListTile(
-                                            title: Text(
-                                              "Slow",
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                            value: "1",
-                                            groupValue: mode,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                mode = value.toString();
-                                                final modev = {'mode': mode};
-                                                // _sendMessage(encoder.convert(modev));
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: RadioListTile(
-                                            title: Text(
-                                              "Medium",
-                                              style: TextStyle(fontSize: 9),
-                                            ),
-                                            value: "2",
-                                            groupValue: mode,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                mode = value.toString();
-                                                final modev = {'mode': mode};
-                                                // _sendMessage(encoder.convert(modev));
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: RadioListTile(
-                                            title: Text(
-                                              "fast",
-                                              style: TextStyle(fontSize: 12),
-                                            ),
-                                            value: "3",
-                                            groupValue: mode,
-                                            onChanged: (value) {
-                                              setState(() {
-                                                mode = value.toString();
-                                                final modev = {'mode': mode};
-                                                // _sendMessage(encoder.convert(modev));
-                                              });
-                                            },
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    Divider(),
-                                  ],
-                                )),
-
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 20,
-                                )
-                              ],
-                            ),
-
-                            Container(
-                              padding: const EdgeInsets.all(16.0),
-                              child: ElevatedButton(
-                                onPressed: () async {
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    //// Here starts the code inside the card
+                    ///
+                    ///
+                    Container(
+                      margin: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 50,
+                          ),
+                          Text('Enter the number of cycles'),
+                          Container(
+                              margin: const EdgeInsets.only(top: 30),
+                              padding: const EdgeInsets.all(5),
+                              width: double.infinity,
+                              child: SfSlider(
+                                min: 20,
+                                max: 200,
+                                value: _value,
+                                interval: 20,
+                                stepSize: 20.0,
+                                showTicks: true,
+                                showLabels: true,
+                                minorTicksPerInterval: 0,
+                                onChanged: (dynamic value) {
                                   if (isConnected) {
-                                    final data2 = {
-                                      'data': {
-                                        'state': 'true',
-                                        'time': _time,
-                                        'mode': mode,
-                                        'cycle': _value
-                                      }
-                                    };
-                                    _sendMessage(encoder.convert(data2));
-
-                                    overflow:
-                                    TextOverflow.ellipsis;
-
-                                    print(data2);
+                                    setState(() {
+                                      _value = value;
+                                    });
+                                    if (_value == 20) {
+                                      final speed1 = {'speed': _value};
+                                      // _sendMessage(encoder.convert(speed1));
+                                    } else if (_value == 40) {
+                                      final speed1 = {'speed': _value};
+                                      // _sendMessage(encoder.convert(speed1));
+                                    } else if (_value == 60) {
+                                      final speed1 = {'speed': _value};
+                                      // _sendMessage(encoder.convert(speed1));
+                                    } else if (_value == 80) {
+                                      final speed1 = {'speed': _value};
+                                      // _sendMessage(encoder.convert(speed1));
+                                    } else if (_value == 100) {
+                                      final speed1 = {'speed': _value};
+                                      // _sendMessage(encoder.convert(speed1));
+                                    } else if (_value == 120) {
+                                      final speed1 = {'speed': _value};
+                                      // _sendMessage(encoder.convert(speed1));
+                                    } else if (_value == 140) {
+                                      final speed1 = {'speed': _value};
+                                      // _sendMessage(encoder.convert(speed1));
+                                    } else if (_value == 160) {
+                                      final speed1 = {'speed': _value};
+                                      // _sendMessage(encoder.convert(speed1));
+                                    } else if (_value == 180) {
+                                      final speed1 = {'speed': _value};
+                                      // _sendMessage(encoder.convert(speed1));
+                                    } else if (_value == 200) {
+                                      final speed1 = {'speed': _value};
+                                      // _sendMessage(encoder.convert(speed1));
+                                    }
                                   }
                                 },
-                                child: Text('     Start     '),
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.white,
-                                  // shape: const RoundedRectangleBorder(
-                                  //     borderRadius: BorderRadius.all(
-                                  //         Radius.circular(10))),
-                                  backgroundColor: Color.fromARGB(255, 255, 140,
-                                      0), //elevated btton background color
+                              )),
+                          // Divider(),
+
+                          //neww
+
+                          Column(
+                            children: [
+                              // SizedBox(
+                              //   height: 30,
+                              // )
+                            ],
+                          ),
+
+                          Container(
+                              margin: const EdgeInsets.all(8),
+                              child: Column(
+                                children: [
+                                  // Text('Enter no. of cycles'),
+                                  // HorizontalPicker(
+                                  //   minValue: 1,
+                                  //   maxValue: 200,
+                                  //   divisions: 200,
+                                  //   height: 80,
+                                  //   // suffix: " \u00b0C",
+                                  //   showCursor: false,
+                                  //   backgroundColor: Colors.lightBlue.shade50,
+                                  //   activeItemTextColor: Colors.blue.shade800,
+                                  //   passiveItemsTextColor: Colors.blue.shade300,
+                                  //   onChanged: (dynamic value) {
+                                  //     if (isConnected) {
+                                  //       setState(() {
+                                  //         _time = time;
+                                  //         final time2 = {'time': _time};
+                                  //         _sendMessage(encoder.convert(time2));
+                                  //       });
+                                  //       _time = value;
+                                  //       final datas = {
+                                  //         'time': _time.toString()
+                                  //       };
+                                  //       // _sendMessage('time:'+_time.toString());
+                                  //       // _sendMessage(encoder.convert(datas));
+                                  //     }
+                                  //   },
+                                  // ),
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 25,
+                                      )
+                                    ],
+                                  ),
+                                  // SpinBox(
+                                  //   min: 1,
+                                  //   max: 200,
+                                  //   value: 30,
+                                  //   // onChanged: (value) => print(value),
+                                  //   onChanged: (dynamic value) {
+                                  //     if (isConnected) {
+                                  //       // setState(() {
+                                  //       //   _time = time;
+                                  //       //   final time2={'time':_time};
+                                  //       //   _sendMessage(encoder.convert(time2));
+                                  //       // });
+                                  //       _time = value;
+                                  //       final datas = {
+                                  //         'time': _time.toString()
+                                  //       };
+                                  //       // _sendMessage('time:'+_time.toString());
+                                  //       // _sendMessage(encoder.convert(datas));
+                                  //     }
+                                  //   },
+                                  // ),
+                                  Padding(padding: const EdgeInsets.all(16.0)),
+                                  Text('Choose Exercise Mode'),
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 25,
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: RadioListTile(
+                                          title: Text(
+                                            "Slow",
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          value: "1",
+                                          groupValue: mode,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              mode = value.toString();
+                                              final modev = {'mode': mode};
+                                              // _sendMessage(encoder.convert(modev));
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: RadioListTile(
+                                          title: Text(
+                                            "Med",
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          value: "2",
+                                          groupValue: mode,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              mode = value.toString();
+                                              final modev = {'mode': mode};
+                                              // _sendMessage(encoder.convert(modev));
+                                            });
+                                          },
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: RadioListTile(
+                                          title: Text(
+                                            "Fast",
+                                            style: TextStyle(fontSize: 12),
+                                          ),
+                                          value: "3",
+                                          groupValue: mode,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              mode = value.toString();
+                                              final modev = {'mode': mode};
+                                              // _sendMessage(encoder.convert(modev));
+                                            });
+                                          },
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              )),
+
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 20,
+                              )
+                            ],
+                          ),
+
+                          Container(
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.purpleAccent,
+                                  Colors.purpleAccent
+                                ],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(18.0),
+                            ),
+                            child: InkWell(
+                              onTap: () async {
+                                if (isConnected) {
+                                  final data2 = {
+                                    'data': {
+                                      'state': '1',
+                                      // 'time': time,
+                                      'mode': mode,
+                                      'cycle': _value.toInt()
+                                    }
+                                  };
+                                  _sendMessage(encoder.convert(data2));
+                                  overflow:
+                                  TextOverflow.ellipsis;
+
+                                  print(data2);
+                                }
+                              },
+                              child: Center(
+                                child: Text(
+                                  'Start',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
+                          ),
+                          // ElevatedButton(
+                          //   onPressed: () async {
+                          //     if (isConnected) {
+                          //       final data2 = {
+                          //         'data': {
+                          //           'state': 'true',
+                          //           'time': _time,
+                          //           'mode': mode,
+                          //           // 'cycle': _value
+                          //         }
+                          //       };
+                          //       _sendMessage(encoder.convert(data2));
 
-                            SizedBox(height: 10),
-                            // Text(_messageBuffer),
+                          //       overflow:
+                          //       TextOverflow.ellipsis;
 
-                            // FloatingActionButton(
-                            //   onPressed: () {
-                            //     setState(() {
-                            //       _messageBuffer;
-                            //     });
-                            //     // Add your onPressed code here!
-                            //   },
-                            //   splashColor: Color.fromARGB(255, 255, 140, 0),
-                            //   backgroundColor: Colors.green,
-                            //   child: const Icon(Icons.refresh_rounded),
-                            // ),
-                          ],
-                        ),
+                          //       print(data2);
+                          //     }
+                          //   },
+                          //   child: Text('     Start     '),
+                          //   style: ElevatedButton.styleFrom(
+                          //     primary: Colors.white,
+                          //     // shape: const RoundedRectangleBorder(
+                          //     //     borderRadius: BorderRadius.all(
+                          //     //         Radius.circular(10))),
+                          //     fixedSize: Size(800, 50),
+                          //     elevation: 5,
+                          //     backgroundColor: Colors.purple[
+                          //         400], //elevated btton background color
+                          //   ),
+                          // ),
+                          SizedBox(height: 10),
+                          // Text(_messageBuffer),
+
+                          // FloatingActionButton(
+                          //   onPressed: () {
+                          //     setState(() {
+                          //       _messageBuffer;
+                          //     });
+                          //     // Add your onPressed code here!
+                          //   },
+                          //   splashColor: Color.fromARGB(255, 255, 140, 0),
+                          //   backgroundColor: Colors.green,
+                          //   child: const Icon(Icons.refresh_rounded),
+                          // ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               )
             ],

@@ -89,21 +89,22 @@ class _MainPage extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 253, 171, 71),
+        backgroundColor: Colors.purple[500],
         centerTitle: true,
+        automaticallyImplyLeading: false,
         title: Text("Neurolyx"),
       ),
       body: Container(
         child: ListView(
           children: <Widget>[
             Divider(),
-            ListTile(title: const Text('Connect To Neurolyx')),
+            // ListTile(title: const Text('Connect To Neurolyx')),
             SwitchListTile(
               title: const Text('Enable Bluetooth'),
-              activeColor: Color.fromARGB(255, 249, 137, 0),
-              activeTrackColor: Color.fromARGB(255, 255, 192, 115),
+              activeColor: Colors.purple[100],
+              activeTrackColor: Colors.purple[300],
               inactiveThumbColor: Color.fromARGB(255, 252, 243, 233),
-              inactiveTrackColor: Color.fromARGB(255, 249, 137, 0),
+              inactiveTrackColor: Colors.purple[100],
               value: _bluetoothState.isEnabled,
               onChanged: (bool value) {
                 // Do the request and update with the true value then
@@ -126,7 +127,7 @@ class _MainPage extends State<MainPage> {
               trailing: ElevatedButton(
                 child: const Text('Settings'),
                 style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 249, 137, 0),
+                  primary: Colors.purple[500],
                 ),
                 onPressed: () {
                   FlutterBluetoothSerial.instance.openSettings();
@@ -224,113 +225,374 @@ class _MainPage extends State<MainPage> {
             //     }
             //   },
             // ),
-            ListTile(
-              title: ElevatedButton(
-                  child: const Text('Explore discovered devices'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 249, 137, 0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // Card(
+                //   elevation: 4.0,
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(12.0),
+                //   ),
+                //   color: Colors.transparent,
+                //   child: Container(
+                //     decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(12.0),
+                //       gradient: LinearGradient(
+                //         begin: Alignment.topLeft,
+                //         end: Alignment.bottomRight,
+                //         colors: [Colors.purple[300]!, Colors.purple[700]!],
+                //       ),
+                //     ),
+                //     child: InkWell(
+                //       onTap: () async {
+                //         final BluetoothDevice? selectedDevice =
+                //             await Navigator.of(context).push(
+                //           MaterialPageRoute(
+                //             builder: (context) {
+                //               return DiscoveryPage();
+                //             },
+                //           ),
+                //         );
+
+                //         if (selectedDevice != null) {
+                //           print('Discovery -> selected ' +
+                //               selectedDevice.address);
+                //         } else {
+                //           print('Discovery -> no device selected');
+                //         }
+                //       },
+                //       child: SizedBox(
+                //         width: 150.0,
+                //         height: 150.0,
+                //         child: Center(
+                //           child: Text(
+                //             'Explore\nDiscovered\nDevices',
+                //             style: TextStyle(
+                //               color: Colors.white,
+                //               fontSize: 15.0,
+                //               // fontWeight: FontWeight.bold,
+                //             ),
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                Card(
+                  elevation: 4.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
-                  onPressed: () async {
-                    final BluetoothDevice? selectedDevice =
-                        await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return DiscoveryPage();
-                        },
+                  color: Colors.transparent,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [Colors.purple[300]!, Colors.purple[700]!],
                       ),
-                    );
-
-                    if (selectedDevice != null) {
-                      print('Discovery -> selected ' + selectedDevice.address);
-                    } else {
-                      print('Discovery -> no device selected');
-                    }
-                  }),
-            ),
-            ListTile(
-              title: ElevatedButton(
-                child: const Text('Connect to paired device to chat'),
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 249, 137, 0),
-                ),
-                onPressed: () async {
-                  final BluetoothDevice? selectedDevice =
-                      await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SelectBondedDevicePage(checkAvailability: false);
-                      },
                     ),
-                  );
-
-                  if (selectedDevice != null) {
-                    print('Connect -> selected ' + selectedDevice.address);
-                    _startChat(context, selectedDevice);
-                  } else {
-                    print('Connect -> no device selected');
-                  }
-                },
-              ),
-            ),
-            Divider(),
-            ListTile(title: const Text('View Live Data')),
-            ListTile(
-              title: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 249, 137, 0),
-                ),
-                child: ((_collectingTask?.inProgress ?? false)
-                    ? const Text('Disconnect and stop background collecting')
-                    : const Text('Connect to start background collecting')),
-                onPressed: () async {
-                  if (_collectingTask?.inProgress ?? false) {
-                    await _collectingTask!.cancel();
-                    setState(() {
-                      /* Update for `_collectingTask.inProgress` */
-                    });
-                  } else {
-                    final BluetoothDevice? selectedDevice =
-                        await Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return SelectBondedDevicePage(
-                              checkAvailability: false);
-                        },
-                      ),
-                    );
-
-                    if (selectedDevice != null) {
-                      await _startBackgroundTask(context, selectedDevice);
-                      setState(() {
-                        /* Update for `_collectingTask.inProgress` */
-                      });
-                    }
-                  }
-                },
-              ),
-            ),
-            ListTile(
-              title: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Color.fromARGB(255, 249, 137, 0),
-                ),
-                child: const Text('View background collected data'),
-                onPressed: (_collectingTask != null)
-                    ? () {
-                        Navigator.of(context).push(
+                    child: InkWell(
+                      onTap: () async {
+                        final BluetoothDevice? selectedDevice =
+                            await Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) {
-                              return ScopedModel<BackgroundCollectingTask>(
-                                model: _collectingTask!,
-                                child: BackgroundCollectedPage(),
-                              );
+                              return SelectBondedDevicePage(
+                                  checkAvailability: false);
                             },
                           ),
                         );
-                      }
-                    : null,
-              ),
+
+                        if (selectedDevice != null) {
+                          print(
+                              'Connect -> selected ' + selectedDevice.address);
+                          _startChat(context, selectedDevice);
+                        } else {
+                          print('Connect -> no device selected');
+                        }
+                      },
+                      child: SizedBox(
+                        width: 150.0,
+                        height: 150.0,
+                        child: Center(
+                          child: Text(
+                            'Connect to \npaired device...',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15.0,
+                              // fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
+
+            // ListTile(
+            //   title: ElevatedButton(
+            //       child: const Text('Explore discovered devices'),
+            //       style: ElevatedButton.styleFrom(
+            //         primary: Color.fromARGB(255, 249, 137, 0),
+            //       ),
+            //       onPressed: () async {
+            //         final BluetoothDevice? selectedDevice =
+            //             await Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) {
+            //               return DiscoveryPage();
+            //             },
+            //           ),
+            //         );
+
+            //         if (selectedDevice != null) {
+            //           print('Discovery -> selected ' + selectedDevice.address);
+            //         } else {
+            //           print('Discovery -> no device selected');
+            //         }
+            //       }),
+            // ),
+            // ListTile(
+            //   title: ElevatedButton(
+            //     child: const Text('Connect to paired device to chat'),
+            //     style: ElevatedButton.styleFrom(
+            //       primary: Color.fromARGB(255, 249, 137, 0),
+            //     ),
+            //     onPressed: () async {
+            //       final BluetoothDevice? selectedDevice =
+            //           await Navigator.of(context).push(
+            //         MaterialPageRoute(
+            //           builder: (context) {
+            //             return SelectBondedDevicePage(checkAvailability: false);
+            //           },
+            //         ),
+            //       );
+
+            //       if (selectedDevice != null) {
+            //         print('Connect -> selected ' + selectedDevice.address);
+            //         _startChat(context, selectedDevice);
+            //       } else {
+            //         print('Connect -> no device selected');
+            //       }
+            //     },
+            //   ),
+            // ),
+            // Divider(),
+            ListTile(title: const Text('View Live Data')),
+            // ListTile(
+            //   title: Container(
+            //     decoration: BoxDecoration(
+            //       gradient: LinearGradient(
+            //         colors: [Colors.purple[300]!, Colors.purple[700]!],
+            //         begin: Alignment.topLeft,
+            //         end: Alignment.bottomRight,
+            //       ),
+            //       borderRadius: BorderRadius.circular(12.0),
+            //     ),
+            //     child: ElevatedButton(
+            //       onPressed: () async {
+            //         if (_collectingTask?.inProgress ?? false) {
+            //           await _collectingTask!.cancel();
+            //           setState(() {
+            //             /* Update for `_collectingTask.inProgress` */
+            //           });
+            //         } else {
+            //           final BluetoothDevice? selectedDevice =
+            //               await Navigator.of(context).push(
+            //             MaterialPageRoute(
+            //               builder: (context) {
+            //                 return SelectBondedDevicePage(
+            //                     checkAvailability: false);
+            //               },
+            //             ),
+            //           );
+
+            //           if (selectedDevice != null) {
+            //             await _startBackgroundTask(context, selectedDevice);
+            //             setState(() {
+            //               /* Update for `_collectingTask.inProgress` */
+            //             });
+            //           }
+            //         }
+            //       },
+            //       child: ((_collectingTask?.inProgress ?? false)
+            //           ? const Text('Disconnect and stop background collecting')
+            //           : const Text('Connect to start background collecting')),
+            //       style: ElevatedButton.styleFrom(
+            //         shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.circular(12.0),
+            //         ),
+            //         primary: Colors.transparent,
+            //         elevation: 0.0,
+            //         minimumSize: Size(150.0, 150.0),
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // ListTile(
+            //   title: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       primary: Color.fromARGB(255, 249, 137, 0),
+            //     ),
+            //     child: ((_collectingTask?.inProgress ?? false)
+            //         ? const Text('Disconnect and stop background collecting')
+            //         : const Text('Connect to start background collecting')),
+            //     onPressed: () async {
+            //       if (_collectingTask?.inProgress ?? false) {
+            //         await _collectingTask!.cancel();
+            //         setState(() {
+            //           /* Update for `_collectingTask.inProgress` */
+            //         });
+            //       } else {
+            //         final BluetoothDevice? selectedDevice =
+            //             await Navigator.of(context).push(
+            //           MaterialPageRoute(
+            //             builder: (context) {
+            //               return SelectBondedDevicePage(
+            //                   checkAvailability: false);
+            //             },
+            //           ),
+            //         );
+
+            //         if (selectedDevice != null) {
+            //           await _startBackgroundTask(context, selectedDevice);
+            //           setState(() {
+            //             /* Update for `_collectingTask.inProgress` */
+            //           });
+            //         }
+            //       }
+            //     },
+            //   ),
+            // ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.purple[300]!, Colors.purple[700]!],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (_collectingTask?.inProgress ?? false) {
+                            await _collectingTask!.cancel();
+                            setState(() {
+                              /* Update for `_collectingTask.inProgress` */
+                            });
+                          } else {
+                            final BluetoothDevice? selectedDevice =
+                                await Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return SelectBondedDevicePage(
+                                      checkAvailability: false);
+                                },
+                              ),
+                            );
+
+                            if (selectedDevice != null) {
+                              await _startBackgroundTask(
+                                  context, selectedDevice);
+                              setState(() {
+                                /* Update for `_collectingTask.inProgress` */
+                              });
+                            }
+                          }
+                        },
+                        child: ((_collectingTask?.inProgress ?? false)
+                            ? const Text(
+                                'Disconnect and stop background collecting')
+                            : const Text('Connect to see status')),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          primary: Colors.transparent,
+                          elevation: 0.0,
+                          minimumSize: Size(150.0, 150.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Colors.purple[300]!, Colors.purple[700]!],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                      child: ElevatedButton(
+                        onPressed: (_collectingTask != null)
+                            ? () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return ScopedModel<
+                                          BackgroundCollectingTask>(
+                                        model: _collectingTask!,
+                                        child: BackgroundCollectedPage(),
+                                      );
+                                    },
+                                  ),
+                                );
+                              }
+                            : null,
+                        child: const Text('View background collected data'),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          primary: Colors.transparent,
+                          elevation: 0.0,
+                          minimumSize: Size(150.0, 150.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            // ListTile(
+            //   title: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       primary: Color.fromARGB(255, 249, 137, 0),
+            //     ),
+            //     child: const Text('View background collected data'),
+            //     onPressed: (_collectingTask != null)
+            //         ? () {
+            //             Navigator.of(context).push(
+            //               MaterialPageRoute(
+            //                 builder: (context) {
+            //                   return ScopedModel<BackgroundCollectingTask>(
+            //                     model: _collectingTask!,
+            //                     child: BackgroundCollectedPage(),
+            //                   );
+            //                 },
+            //               ),
+            //             );
+            //           }
+            //         : null,
+            //   ),
+            // ),
           ],
         ),
       ),
