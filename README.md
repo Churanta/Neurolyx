@@ -28,7 +28,7 @@ The plugin (for now) uses Serial Port profile for moving data over RFCOMM, so ma
 | :-----------------------: | :-----------------------: | :-----------------------: |
 | ![](screenshots/sc4.jpeg) | ![](screenshots/sc5.jpeg) | ![](screenshots/sc2.jpeg) |
 
-Note: There screen-shots might be out-dated. Build and see the example app for yourself, you won't regret it. :)
+Note: There screen-shots are up-to-date. Build and see the example app for yourself, you won't regret it. :)
 
 <!-- #### Tests  -->
 
