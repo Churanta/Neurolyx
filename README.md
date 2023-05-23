@@ -85,7 +85,7 @@ You can also use the descriptor (`/dev/rfcomm0`) in other way, not necessarily t
 
 ## Background monitor example
 
-For testing multiple connections there were created background data collector, which connects to Arduino controller equiped with `HC-05` Bluetooth interface, 2 `DS18B20` termometers and water pH level meter. There are very nice graphs to displaying the recieved data.
+For testing multiple connections there were created background data collector, which connects to Arduino controller equiped with `HC-05` Bluetooth interface, 2 `DS18B20` termometers and water pH level meter. There are very nice graphs to displaying the recieved data..
 
 The example uses Celsius degree, which was chosen because it utilizes standard conditions of water freezing and ice melting points instead of just rolling a dice over periodic table of elements like a Fahrenheit do...
 
